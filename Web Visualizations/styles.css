@@ -1,0 +1,28 @@
+body {
+    background: #c6c9d6e3;
+    color: #	#000000;
+    font-weight: 300;
+    font-size: 16px;
+    font-family: 'Georgia', sans-serif;
+    
+}
+
+
+.navbar-brand{
+	font-family: "Georgia", serif;
+	font-weight: 800;
+	font-size: 20px;
+    margin-left: auto;
+    
+}
+
+
+
+
+footer.footer{
+	background-color:#2d3238;
+ 	color: #FFFFFF;
+	border-radius: .3rem;
+	text-align: center;
+	padding: 5px 5px;
+}
