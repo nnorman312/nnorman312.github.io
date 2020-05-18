@@ -31,41 +31,9 @@ function updateMetadata(sample) {
       Object.entries(result).forEach(([key, value]) => {
           metaPanel.append("h6").text(`${key.toUpperCase()}: ${value}`)
       })
-  
-// Data for Gauge Chart
-  var data = [
-    {
-      domain: { x: [0, 1], y: [0, 1] },
-      marker: {size: 28, color:'850000'},
-      value: result.wfreq,
-      title: 'Belly Button Washing Frequency<br> Scrubs per Week',
-      titlefont: {family: '"Palatino Linotype", "Book Antiqua", Palatino, serif'},
-      type: "indicator",
-      mode: "gauge+number"
-    }
-  ];
-  // Layout for Gauge Chart
-
-  var layout = {
-    width: 450,
-     height: 400,
-     margin: { t: 25, r: 25, l: 25, b: 25 },
-     line: {
-     color: '600000'
-     },
-     paper_bgcolor: "#a5bdc6",
-     font: { color: "#85541d", family: "Serif" }
-   };
-
-  
-  Plotly.newPlot("gauge", data, layout);
-// Use `Object.entries` to add each key and value pair to the metaPanel
-// Hint: Inside the loop, you will need to use d3 to append new
-// tags for each key-value in the metadata.
-  });
-}
 
 
+      
 function updateCharts(sample) {    
   d3.json("./data/samples.json").then((data) => {
   var samples = data.samples;
@@ -83,7 +51,7 @@ function updateCharts(sample) {
       marker: {
       size: sample_values,
       color: otu_ids,
-      colorscale:"Electric"
+      colorscale:"Earth"
       }
   };
   var data = [trace1];
