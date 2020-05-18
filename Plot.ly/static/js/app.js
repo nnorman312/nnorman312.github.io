@@ -51,10 +51,10 @@ function init() {
        height: 400,
        margin: { t: 25, r: 25, l: 25, b: 25 },
        line: {
-       color: '600000'
+       color: 'lightblue'
        },
        paper_bgcolor: "rgba(0,0,0,0)",
-       font: { color: "#ff1493", family: "Serif" }
+       font: { color: "#000000", family: "Serif" }
      };
   
     
