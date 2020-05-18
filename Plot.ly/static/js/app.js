@@ -32,38 +32,6 @@ function init() {
             metaPanel.append("h6").text(`${key.toUpperCase()}: ${value}`)
         })
     
-  // Data for Gauge Chart
-    var data = [
-      {
-        domain: { x: [0, 1], y: [0, 1] },
-        marker: {size: 28, color:'850000'},
-        value: result.wfreq,
-        title: 'Belly Button Washing Frequency<br> Scrubs per Week',
-        titlefont: {family: '"Palatino Linotype", "Book Antiqua", Palatino, serif'},
-        type: "indicator",
-        mode: "gauge+number"
-      }
-    ];
-    // Layout for Gauge Chart
-  
-    var layout = {
-      width: 450,
-       height: 400,
-       margin: { t: 25, r: 25, l: 25, b: 25 },
-       line: {
-       color: 'lightblue'
-       },
-       paper_bgcolor: "rgba(0,0,0,0)",
-       font: { color: "#000000", family: "Serif" }
-     };
-  
-    
-    Plotly.newPlot("gauge", data, layout);
-  // Use `Object.entries` to add each key and value pair to the metaPanel
-  // Hint: Inside the loop, you will need to use d3 to append new
-  // tags for each key-value in the metadata.
-    });
-  }
   
   
   function updateCharts(sample) {    
@@ -113,7 +81,12 @@ function init() {
     });
   }
   
-  
+   // BONUS: Build the Gauge Chart
+   buildGauge(data.wfreq);
+  });
+}
+
+
   function optionChanged(newSample) {
     // Fetch new data each time a new sample is selected
     updateCharts(newSample);
