@@ -39,7 +39,7 @@ function updateMetadata(sample) {
       marker: {size: 28, color:'850000'},
       value: result.wfreq,
       title: 'Belly Button Washing Frequency<br> Scrubs per Week',
-      titlefont: {family: '"Palatino Linotype", "Book Antiqua", Palatino, serif'},
+      titlefont: {family: "Georgia", "sans-serif"},
       type: "indicator",
       mode: "gauge+number"
     }
@@ -53,8 +53,9 @@ function updateMetadata(sample) {
      line: {
      color: '600000'
      },
-     paper_bgcolor: "#a5bdc6",
-     font: { color: "#85541d", family: "Serif" }
+     paper_bgcolor='rgba(0,0,0,0)',
+     plot_bgcolor='rgba(0,0,0,0)'
+     font: { color: "##FFB6C1", family: "Georgia", "sans-serif"}
    };
 
   
