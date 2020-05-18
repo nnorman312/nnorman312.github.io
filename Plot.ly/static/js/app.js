@@ -59,7 +59,7 @@ function init() {
         title: 'Bacteria Cultures per Sample',
         showlegend: false,
         hovermode: 'closest',
-        xaxis: {title:"OTU (Operational Taxonomic Unit) ID " +sample},
+        xaxis: {title:"OTU ID "},
         margin: {t:30}
     };
     Plotly.newPlot('bubble', data, layout); 
@@ -74,7 +74,7 @@ function init() {
     };
     var data = [trace1];
     var layout = {
-        title: "Top Ten OTUs for Individual " +sample,
+        title: "Top Ten OTUs for Test Subject " +sample,
         margin: {l: 100, r: 100, t: 100, b: 100}
     };
     Plotly.newPlot("bar", data, layout);  
