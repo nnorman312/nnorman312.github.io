@@ -1,77 +1,124 @@
-function populateDemoInfo(sample){
-  var panel = d3.select('#sample-metadata');
-  panel.html('');
-  panel.append('p').text('id: ' + sample.id);
-  panel.append('p').text('ethnicity: ' + sample.ethnicity);
-  panel.append('p').text('gender: ' + sample.gender);
-  panel.append('p').text('age: ' + sample.age);
-  panel.append('p').text('location: ' + sample.location);
-  panel.append('p').text('bbtype: ' + sample.bbtype);
-  panel.append('p').text('wfreq: ' + sample.wfreq);
-}
-
-function plotGraphs(sample){
-  //Bar
-  yValues = sample['otu_ids'].slice(0,10).map(value => 'OTU ' + value)
-  xValues = sample['sample_values'].slice(0, 10);
-  textValues = sample['otu_labels'].slice(0, 10);
-
-  var data = [{
-          type: 'bar',
-          x: xValues,
-          y: yValues,
-          text: textValues,
-          orientation: 'h'
-      }];
+function init() {
+  // Select the dropdown element
+  var selector = d3.select("#selDataset");
   
-  var layout = {
-      yaxis:{
-          categoryorder: 'max ascending'
-      }
-  }
-
-  Plotly.newPlot('bar', data, layout);
-
-  //Bubble
-  var trace = [{
-      x: sample['otu_ids'],
-      y: sample['sample_values'],
-      text:  sample['otu_labels'],
-      mode: 'markers',
-      marker: {
-        size: sample['sample_values'],
-        color: sample['otu_ids'],
-        colorscale: 'Viridis',
-      }
-    }];;
+  // Populate the dropdown with subject ID's from the list of sample Names
+    d3.json("./data/samples.json").then((data) => {
+      var subjectIds = data.names;
+      subjectIds.forEach((id) => {
+        selector
+        .append("option")
+        .text(id)
+        .property("value", id);
+      });
     
-    Plotly.newPlot('bubble', trace);
-
-}
-
-function optionChanged(id){
-  d3.json("samples.json").then(function(data){
-      var metaData = data.metadata.filter(item => item.id == id)
-      var sample = data.samples.filter(item => item.id ==  id)
-      populateDemoInfo(metaData[0])
-      plotGraphs(sample[0]);
+    // Use the first subject ID from the names to build initial plots
+    const firstSubject = subjectIds[0];
+    updateCharts(firstSubject);
+    updateMetadata(firstSubject);
   });
 }
 
-(async function(){
-  var data = await d3.json("samples.json");   
-  console.log(data); 
-  var names = data.names;
 
-  var select = d3.select('#selDataset');    
-  select.selectAll('option')
-  .data(names)
-  .enter().append('option')
-  .attr('value', d => { return d; })
-  .text(d => { return d; });
 
-  //Calls function against first item in select list. Decided to default first item.
-  optionChanged(select.node().value);
+function updateMetadata(sample) {
+  d3.json("./data/samples.json").then((data) => {
+      var metadata = data.metadata;
+      var filterArray = metadata.filter(sampleObject => sampleObject.id == sample);
+      var result = filterArray[0];
+      var metaPanel = d3.select("#sample-metadata");
+      metaPanel.html("");
+      Object.entries(result).forEach(([key, value]) => {
+          metaPanel.append("h6").text(`${key.toUpperCase()}: ${value}`)
+      })
   
+// Data for Gauge Chart
+  var data = [
+    {
+      domain: { x: [0, 1], y: [0, 1] },
+      marker: {size: 28, color:'850000'},
+      value: result.wfreq,
+      title: 'Belly Button Washing Frequency<br> Scrubs per Week',
+      titlefont: {family: '"Palatino Linotype", "Book Antiqua", Palatino, serif'},
+      type: "indicator",
+      mode: "gauge+number"
+    }
+  ];
+  // Layout for Gauge Chart
 
-})()
+  var layout = {
+    width: 450,
+     height: 400,
+     margin: { t: 25, r: 25, l: 25, b: 25 },
+     line: {
+     color: '600000'
+     },
+     paper_bgcolor: "#a5bdc6",
+     font: { color: "#85541d", family: "Serif" }
+   };
+
+  
+  Plotly.newPlot("gauge", data, layout);
+// Use `Object.entries` to add each key and value pair to the metaPanel
+// Hint: Inside the loop, you will need to use d3 to append new
+// tags for each key-value in the metadata.
+  });
+}
+
+
+function updateCharts(sample) {    
+  d3.json("./data/samples.json").then((data) => {
+  var samples = data.samples;
+  var filterArray = samples.filter(sampleObject => sampleObject.id == sample);
+  var result = filterArray[0];
+  var sample_values = result.sample_values;
+  var otu_ids = result.otu_ids;
+  var otu_labels = result.otu_labels;   
+  // Bubble Chart
+  var trace1 = {
+      x: otu_ids,
+      y: sample_values,
+      text: otu_labels,
+      mode: 'markers',
+      marker: {
+      size: sample_values,
+      color: otu_ids,
+      colorscale:"Electric"
+      }
+  };
+  var data = [trace1];
+  var layout = {
+      title: 'Bacteria Cultures per Sample',
+      showlegend: false,
+      hovermode: 'closest',
+      xaxis: {title:"OTU (Operational Taxonomic Unit) ID " +sample},
+      margin: {t:30}
+  };
+  Plotly.newPlot('bubble', data, layout); 
+  // Bar Chart
+  var trace1 = {
+      x: sample_values.slice(0,10).reverse(),
+      y: otu_ids.slice(0,10).map(otuID => `OTU ${otuID}`).reverse(),
+      text: otu_labels.slice(0,10).reverse(),
+      name: "Greek",
+      type: "bar",
+      orientation: "h"
+  };
+  var data = [trace1];
+  var layout = {
+      title: "Top Ten OTUs for Individual " +sample,
+      margin: {l: 100, r: 100, t: 100, b: 100}
+  };
+  Plotly.newPlot("bar", data, layout);  
+  });
+}
+
+
+function optionChanged(newSample) {
+  // Fetch new data each time a new sample is selected
+  updateCharts(newSample);
+  updateMetadata(newSample);
+}
+
+// Initialize the dashboard
+init();
