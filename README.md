@@ -15,3 +15,7 @@ Within the dashboard, I complete the following:
 - Create a bubble chart that displays the bacteria cultures per sample
 - Create a gauge chart to plot the weekly washing frequency of the individual
 - Display the individual's demographic information and each key-value pair from the dataset
+
+D3 Challenge:
+
+Using information from the U.S. Census Bureau and D3 techniques, I create an interactive scatter plot that displays health risks of certain demographics by state. I code this graphic in the app.js file and pull in the data from data.csv. The scatter plot includes interchangable variables such as Age (Median) vs. Smokes (%), In Poverty (%) vs. Obesity (%), and Household Income (Median) vs. Lacks Healthcare(%).
