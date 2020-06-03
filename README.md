@@ -22,9 +22,5 @@ Using information from the U.S. Census Bureau and D3 techniques, I create an int
 
 Leaflet Challenge:
 
-Using earthquake data from USGS, I visualize the magnitude of all earthquakes from the past 7 days (https://nnorman312.github.io/Leaflet/index.html). Using Leaflet, I create a map that plots all of the earthquakes from the USGS dataset based on their longitude and latitude.
-
-The second dataset on my map illustrates the relationship between tectonic plates and seismic activity.
-
-Using mapbox.com, I also include the following tile layers to provide different views: Satellite, Grayscale, and Outdoors.
+Using earthquake data from USGS, I visualize the magnitude of all earthquakes from the past 7 days (https://nnorman312.github.io/Leaflet/index.html). Using Leaflet, I create a map that plots all of the earthquakes from the USGS dataset based on their longitude and latitude. The second dataset on my map illustrates the relationship between tectonic plates and seismic activity. Using mapbox.com, I also include the following tile layers to provide different views: Satellite, Grayscale, and Outdoors.
 
